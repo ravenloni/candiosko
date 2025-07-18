@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InventoryFun - Gestión de Inventarios Fácil y Divertida</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape1 { width: 80px; height: 80px; background: #ff6b6b; top: 10%; left: 10%; animation-delay: 0s; }
+        .shape2 { width: 60px; height: 60px; background: #4ecdc4; top: 20%; right: 15%; animation-delay: 2s; }
+        .shape3 { width: 100px; height: 100px; background: #ffe66d; bottom: 30%; left: 5%; animation-delay: 4s; }
+        .shape4 { width: 70px; height: 70px; background: #ff8a94; bottom: 10%; right: 10%; animation-delay: 1s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-top: 40px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 25px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 35px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .hero-image {
+            width: 280px;
+            height: 200px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 30px;
+            margin: 0 auto 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .phone-mockup {
+            width: 120px;
+            height: 160px;
+            background: white;
+            border-radius: 20px;
+            position: relative;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            padding: 15px 10px;
+        }
+
+        .phone-screen {
+            flex: 1;
+            background: linear-gradient(45deg, #ff9a9e, #fecfef);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .features {
+            margin-bottom: 40px;
+        }
+
+        .feature-item {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-color: #4ecdc4;
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 20px;
+            color: white;
+        }
+
+        .feature-icon.inventory { background: linear-gradient(45deg, #ff6b6b, #ff8a94); }
+        .feature-icon.analytics { background: linear-gradient(45deg, #4ecdc4, #44a08d); }
+        .feature-icon.sync { background: linear-gradient(45deg, #ffe66d, #ffb74d); }
+        .feature-icon.alerts { background: linear-gradient(45deg, #a8edea, #fed6e3); }
+
+        .feature-text h3 {
+            font-size: 16px;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .feature-text p {
+            font-size: 12px;
+            color: #7f8c8d;
+            line-height: 1.4;
+        }
+
+        .download-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .download-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .download-btn:active {
+            transform: translateY(0);
+        }
+
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .download-btn:hover::before {
+            left: 100%;
+        }
+
+        .app-size {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: 10px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 40px;
+            background: linear-gradient(45deg, #ffeaa7, #fab1a0);
+            border-radius: 20px;
+            padding: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #636e72;
+        }
+
+        .reviews {
+            margin-bottom: 40px;
+        }
+
+        .review-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .review-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 14px;
+        }
+
+        .review-name {
+            font-size: 14px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .review-stars {
+            color: #f39c12;
+            font-size: 12px;
+            margin-left: auto;
+        }
+
+        .review-text {
+            font-size: 12px;
+            color: #7f8c8d;
+            line-height: 1.4;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #7f8c8d;
+            font-size: 12px;
+        }
+
+        .footer-links {
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: #667eea;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 12px;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            color: #667eea;
+            animation: bounce 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="floating-shapes">
+            <div class="shape shape1"></div>
+            <div class="shape shape2"></div>
+            <div class="shape shape3"></div>
+            <div class="shape shape4"></div>
+        </div>
+
+        <div class="content">
+            <header>
+                <div class="logo">📦</div>
+                <h1>InventoryFun</h1>
+                <p class="subtitle">Gestiona tu inventario de manera fácil, rápida y divertida</p>
+            </header>
+
+            <div class="hero-image">
+                <div class="phone-mockup">
+                    <div class="phone-screen">📱</div>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">10k+</div>
+                    <div class="stat-label">Descargas</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">4.8★</div>
+                    <div class="stat-label">Valoración</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Empresas</div>
+                </div>
+            </div>
+
+            <div class="features">
+                <div class="feature-item">
+                    <div class="feature-icon inventory">📊</div>
+                    <div class="feature-text">
+                        <h3>Control Total</h3>
+                        <p>Gestiona todos tus productos de forma intuitiva y visual</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon analytics">📈</div>
+                    <div class="feature-text">
+                        <h3>Análisis Inteligente</h3>
+                        <p>Estadísticas y reportes automáticos para tomar mejores decisiones</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon sync">☁️</div>
+                    <div class="feature-text">
+                        <h3>Sincronización</h3>
+                        <p>Accede a tus datos desde cualquier dispositivo en tiempo real</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon alerts">🔔</div>
+                    <div class="feature-text">
+                        <h3>Alertas Inteligentes</h3>
+                        <p>Recibe notificaciones sobre stock bajo y fechas importantes</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="download-section">
+                <a href="#" class="download-btn pulse" onclick="downloadApp()">
+                    📱 Descargar APK
+                </a>
+                <div class="app-size">Tamaño: 15.2 MB • Versión 2.1.0</div>
+            </div>
+
+            <div class="reviews">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar" style="background: linear-gradient(45deg, #ff6b6b, #4ecdc4);">M</div>
+                        <div class="review-name">María González</div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">
+                        "¡Increíble! Por fin una app de inventarios que es fácil de usar y bonita. La recomiendo totalmente."
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar" style="background: linear-gradient(45deg, #ffe66d, #ffb74d);">C</div>
+                        <div class="review-name">Carlos Ruiz</div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-text">
+                        "Perfecta para mi negocio. Las alertas de stock me han ahorrado muchos dolores de cabeza."
+                    </div>
+                </div>
+            </div>
+
+            <footer>
+                <div class="footer-links">
+                    <a href="#">Privacidad</a>
+                    <a href="#">Términos</a>
+                    <a href="#">Soporte</a>
+                </div>
+                <p>© 2025 InventoryFun. Todos los derechos reservados.</p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        function downloadApp() {
+            // Simulación de descarga
+            const btn = document.querySelector('.download-btn');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = '⏳ Descargando...';
+            btn.style.background = 'linear-gradient(45deg, #2ecc71, #27ae60)';
+            
+            setTimeout(() => {
+                btn.innerHTML = '✅ ¡Descargado!';
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = 'linear-gradient(45deg, #667eea, #764ba2)';
+                }, 2000);
+            }, 2000);
+        }
+
+        // Animaciones adicionales
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animación de aparición de elementos
+            const elements = document.querySelectorAll('.feature-item, .review-card');
+            elements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    el.style.transition = 'all 0.6s ease';
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+
+            // Interacción con las formas flotantes
+            const shapes = document.querySelectorAll('.shape');
+            shapes.forEach(shape => {
+                shape.addEventListener('click', function() {
+                    this.style.transform = 'scale(1.2)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 300);
+                });
+            });
+        });
+
+        // Efecto parallax suave
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const shapes = document.querySelectorAll('.shape');
+            
+            shapes.forEach((shape, index) => {
+                const speed = 0.5 + (index * 0.1);
+                shape.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
